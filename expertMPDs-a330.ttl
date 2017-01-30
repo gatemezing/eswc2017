@@ -1,0 +1,112 @@
+## sample instantiations of a Task
+## made by experts to find matching btw OIs and MPDs
+## See expert docs with tasks
+## concept schemes are described elsewhere ###	
+
+
+@prefix rtask: <http://data.airbus.com/id/task/> .
+@prefix mrbr: <http://data.airbus.com/id/mrbr/> .
+@prefix dkey: <http://data.airbus.com/id/descriptionKey/> .
+@prefix wkey: <http://data.airbus.com/id/workperformKey/> .
+@prefix rfail: <http://data.airbus.com/id/failure/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix descItem: <http://data.airbus.com/id/scheme/descItem/> .
+@prefix descAction: <http://data.airbus.com/id/scheme/descAction/> .
+@prefix workItem: <http://data.airbus.com/id/scheme/workItem/> .
+@prefix workAction: <http://data.airbus.com/id/scheme/workAction/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tf: <http://data.airbus.com/def/tf#> .
+
+
+### sample model in RDF of an expert Task ##
+### during the manual matching process for A330 ##### 
+
+
+#########################################
+# case of task <A330 MPD 245000-03-1> ###
+#########################################
+
+mrbr:A330MPD245000031 a  tf:MRBR ; 
+						tf:hasFailure rfail:A330MPD245000031 ;
+					 .
+
+rfail:A330MPD245000031  a tf:Failure ;
+						tf:hasCause """ Relay 1XH
+										Emer GLC"""@en ;
+						tf:hasEffect "No effect as a single failure (only used in Emer Elec)"@en  ;
+						.
+
+rtask:A330MPD245000031 a tf:ProgramTask ;
+	rdfs:label "OPERATIONAL CHECK OF 905XP BUSBAR SHEDDING IN EMERGENCY CONFIGURATION"@en ;
+	tf:nameDescriptor dkey:A330MPD245000031 ;
+	tf:workDescriptor wkey:A330MPD245000031 ;
+	.
+	
+
+dkey:A330MPD245000031 a tf:DescriptionKey ;
+				rdfs:label "description keys A330 MPD 245000-03-1"@en ;
+	  			tf:descItem  descItem:EmerGLC, descItem:Relay ;						
+	  			tf:descAction  descAction:Inability, descAction:Fail, descAction:Inop ;	
+	  			.
+wkey:A330MPD245000031 a tf:WorkPerformKey ;
+				rdfs:label "work performed keys A330 MPD 245000-03-1"@en ;													 		
+	  			tf:workAction  workAction:Change ;					
+	  			 .								
+
+##########################################
+## case of task <A330 MPD 271400-03-1> ###
+##########################################
+
+mrbr:A330MPD271400031 a  tf:MRBR ; 
+						tf:hasFailure rfail:A330MPD271400031 ;
+						.
+
+rfail:A330MPD271400031  a tf:Failure ;
+						tf:hasCause "AILERON SERVO CONTROL"@en ;
+						tf:hasCause "AILERON HINGE LINE"@en ;
+						tf:hasEffect "POSSIBLE VIBRATIONS OF AILERON"@en ;
+						.
+
+rtask:A330MPD271400031 a tf:ProgramTask ;
+						rdfs:label "CHECK AILERON SERVO CONTROL AND HINGE BEARINGS FOR EXCESSIVE PLAY AND GENERAL CONDITION"@en ;
+						tf:nameDescriptor dkey:A330MPD271400031 ;
+						tf:workDescriptor wkey:A330MPD271400031 ;
+						.
+	
+dkey:A330MPD271400031 a tf:DescriptionKey ;
+						rdfs:label "description keys A330 MPD 271400-03-1"@en ;
+						tf:descAction  descAction:Corrosion, descAction:Lost, descAction:Vibration, descAction:Play ;	
+						.
+				
+wkey:A330MPD271400031 a tf:WorkPerformKey ;
+				rdfs:label "work performed keys A330 MPD 271400-03-1"@en ;
+				tf:workItem workItem:Hinge, workItem:Bear, workItem:Servo ;													 		
+	  			tf:workAction  workAction:Change, workAction:Lubrication, workAction:Adjust, workAction:Rust, workAction:Wear ;					
+	  			.								
+
+##########################################
+## case of task <A330 MPD 235100-02-1> ###
+##########################################
+mrbr:A330MPD235100021 a  tf:MRBR ; 
+						tf:hasFailure rfail:A330MPD235100021 ;
+						.
+rfail:A330MPD235100021  a tf:Failure ;
+						tf:hasCause """ Audio Switching Selector 
+									   Audio Control Panel (ACP)"""@en ;
+						tf:hasEffect "No effect as a single failure (loss of redundancy)"@en ;
+						.
+rtask:A330MPD235100021 a tf:ProgramTask ;
+						rdfs:label "OPERATIONAL TEST OF CAPTAIN AND FIRST OFFICER AUDIO CONTROL PANELS SWITCHING TO THE THIRD AUDIO CONTROL PANEL"@en ;
+						tf:nameDescriptor dkey:A330MPD235100021 ;
+						tf:workDescriptor wkey:A330MPD235100021 ;
+						.
+dkey:A330MPD235100021 a tf:DescriptionKey ;
+						rdfs:label "description keys A330 MPD 235100-02-1"@en ;
+						tf:descItem  descItem:ASS, descItem:Selector, descItem:ACP ;						
+						tf:descAction  descAction:Inability, descAction:Fail, descAction:Inop ;	
+						.
+wkey:A330MPD235100021 a tf:WorkPerformKey ;
+						rdfs:label "work performed keys A330 MPD 235100-02-1"@en ;													 		
+						tf:workAction  workAction:Change ;					
+						.						
+						
