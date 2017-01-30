@@ -1,0 +1,135 @@
+PREFIX oi: <http://data.airbus.com/def/oi#>
+PREFIX descAction: <http://data.airbus.com/id/scheme/descAction/>
+PREFIX descItem: <http://data.airbus.com/id/scheme/descItem/>
+PREFIX workItem: <http://data.airbus.com/id/scheme/workItem/>
+PREFIX workAction: <http://data.airbus.com/id/scheme/workAction/>
+
+
+###################################################################
+## T1: <A330 MPD 245000-03-1>
+## descriptors: descItems (EmerGLC, Relay) AND descActions (Inability, Fail, Inop)
+## workperformed: workAction:Change AND workItem = {}
+##########################################################################
+
+SELECT DISTINCT ?oiUri ?oiDesc ?oiWork ?isP1 ?isPP1 ?isQ1 ?isQQ1 
+
+WHERE {
+  
+  ?oiUri a oi:Interruption.
+  ?oiUri oi:description ?oiDesc.
+  ?oiUri oi:workPerform ?oiWork.
+  
+    ## This is for creation the union of DescActions = P 
+  
+      OPTIONAL {
+        {?oiUri oi:tag descAction:Inability} UNION {?oiUri oi:tag descAction:Fail} UNION {?oiUri oi:tag descAction:Inop}
+        BIND ("true" AS ?isP1).
+      }
+  
+    
+    ## This is for creation the union of DescItems = Q
+  
+      OPTIONAL {
+        {?oiUri oi:tag descItem:EmerGLC} UNION {?oiUri oi:tag descItem:Relay}
+        BIND ("true" AS ?isQ1).
+      }
+  
+
+    ## This is for creation the union of WorkActions = P'
+  
+      OPTIONAL {
+        {?oiUri oi:tag workAction:Change} 
+        BIND ("true" AS ?isPP1).
+      }
+  
+}
+
+
+
+###################################################################
+## T2: <A330 MPD 271400-03-1>
+#descActions: descAction:Corrosion, descAction:Lost, descAction:Vibration, descAction:Play
+#workitems: workItem:Hinge, workItem:Bear, workItem:Servo 
+#workActions: workAction:Change, workAction:Lubrication, workAction:Adjust, workAction:Rust, workAction:Wear
+##########################################################################
+
+SELECT DISTINCT ?oiUri ?oiDesc ?oiWork ?isP2 ?isPP2  isQ2 ?isQQ2 
+
+WHERE {
+  
+  ?oiUri a oi:Interruption.
+  ?oiUri oi:description ?oiDesc.
+  ?oiUri oi:workPerform ?oiWork.
+  
+    ## This is for creation the union of DescActions = P 
+  
+      OPTIONAL {
+        {?oiUri oi:tag descAction:Corrosion} UNION {?oiUri oi:tag descAction:Lost} UNION {?oiUri oi:tag descAction:Vibration} UNION {?oiUri oi:tag descAction:Play}
+        BIND ("true" AS ?isP2).
+      }
+  
+    
+  
+
+    ## This is for creation the union of WorkActions = P'
+  {
+      OPTIONAL {
+        {?oiUri oi:tag workAction:Change} UNION {?oiUri oi:tag workAction:Lubrication} UNION {?oiUri oi:tag workAction:Adjust} UNION {?oiUri oi:tag workAction:Rust} UNION {?oiUri oi:tag workAction:Wear}
+        BIND ("true" AS ?isPP2).
+      }
+  }
+
+    ## This is for creation the union of workitems = Q'
+  {
+      OPTIONAL {
+        {?oiUri oi:tag workItem:Hinge} UNION {?oiUri oi:tag workItem:Bear} UNION {?oiUri oi:tag workItem:Servo} 
+        BIND ("true" AS ?isQQ2).
+      }
+  }
+}
+
+
+
+
+##################################################################
+## T3: <A330 MPD 235100-02-1>
+## descItems  descItem:ASS, descItem:Selector, descItem:ACP ;           
+## descActions descAction:Inability, descAction:Fail, descAction:Inop 
+# WorkAction: workAction:Change
+#####################################################################
+
+SELECT DISTINCT ?oiUri ?oiDesc ?oiWork ?isP3 ?isPP3 ?isQ3  ?isQQ3 
+
+WHERE {
+  
+  ?oiUri a oi:Interruption.
+  ?oiUri oi:description ?oiDesc.
+  ?oiUri oi:workPerform ?oiWork.
+  
+    ## This is for creation the union of DescActions = P 
+  
+      OPTIONAL {
+        {?oiUri oi:tag descAction:Inability} UNION {?oiUri oi:tag descAction:Fail} UNION {?oiUri oi:tag descAction:Inop} 
+        BIND ("true" AS ?isP3).
+      }
+  
+  
+  
+  ## This is for creation the union of DescItems = Q
+  
+      OPTIONAL {
+        {?oiUri oi:tag descItem:ASS} UNION {?oiUri oi:tag descItem:Selector} UNION {?oiUri oi:tag descItem:ACP}
+        BIND ("true" AS ?isQ3).
+      }
+  
+
+    ## This is for creation the union of WorkActions = P'
+  
+      OPTIONAL {
+        {?oiUri oi:tag workAction:Change} 
+        BIND ("true" AS ?isPP3).
+      }
+  
+
+   
+}
